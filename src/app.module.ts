@@ -9,10 +9,12 @@ import { CategoryModule } from './category/category.module';
 import { CustomerController } from './customer/customer.controller';
 import { CustomerService } from './customer/customer.service';
 import { CustomerModule } from './customer/customer.module';
+import { StudentController } from './student/student.controller';
+import { StudentModule } from './student/student.module';
 
 @Module({
-  imports: [EmployeeModule, CategoryModule, CustomerModule],
-  controllers: [AppController, UserController, ProductController, CustomerController],
+  imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule],
+  controllers: [AppController, UserController, ProductController, CustomerController, StudentController],
   providers: [AppService, ProductService, CustomerService],
 })
 export class AppModule {}
