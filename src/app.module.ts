@@ -24,6 +24,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { OpenaiController } from './openai/openai.controller';
 
 @Module({
   imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule, ConfigModule.forRoot({
@@ -41,7 +42,7 @@ import { APP_GUARD } from '@nestjs/core';
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL!)
   ],
-  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController, EvController],
+  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController, EvController, OpenaiController],
   providers: [AppService, ProductService, CustomerService, DatabaseService, EvService,
     {
       provide: APP_GUARD,
