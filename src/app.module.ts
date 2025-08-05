@@ -22,15 +22,32 @@ import { EvController } from './ev/ev.controller';
 import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule, ConfigModule.forRoot({
     isGlobal: true,
   }),
-    MongooseModule.forRoot(process.env.MONGO_URI!)
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          name: 'default',
+          ttl: 6000,
+          limit: 10,
+        }
+      ],
+      errorMessage: 'Too many requests, please try again later.',
+    }),
+    MongooseModule.forRoot(process.env.DATABASE_URL!)
   ],
   controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController, EvController],
-  providers: [AppService, ProductService, CustomerService, DatabaseService, EvService],
+  providers: [AppService, ProductService, CustomerService, DatabaseService, EvService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

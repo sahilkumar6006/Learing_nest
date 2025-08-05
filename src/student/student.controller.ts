@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { StudentService } from './student.service';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('student')
 export class StudentController {
     constructor(private readonly studentService: StudentService) { }
 
     @Get()
+    @Throttle({ default: { limit: 3, ttl: 60000 } }) // Allow 10 requests per minute
     getAll() {
         return this.studentService.getAllStudents();
     }
