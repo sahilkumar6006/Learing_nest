@@ -16,10 +16,15 @@ import { RolesauthController } from './rolesauth/rolesauth.controller';
 import { ExceptionController } from './exception/exception.controller';
 import { DatabaseService } from './database/database.service';
 import { DatabaseController } from './database/database.controller';
+import { ConfigModule } from '@nestjs/config';
+import { EvService } from './ev/ev.service';
+import { EvController } from './ev/ev.controller';
 
 @Module({
-  imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule],
-  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController],
-  providers: [AppService, ProductService, CustomerService, DatabaseService],
+  imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule, ConfigModule.forRoot({
+    isGlobal: true,
+  })],
+  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController, EvController],
+  providers: [AppService, ProductService, CustomerService, DatabaseService, EvService],
 })
-export class AppModule {}
+export class AppModule { }
