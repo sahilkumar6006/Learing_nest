@@ -14,10 +14,12 @@ import { StudentModule } from './student/student.module';
 import { MynameController } from './myname/myname.controller';
 import { RolesauthController } from './rolesauth/rolesauth.controller';
 import { ExceptionController } from './exception/exception.controller';
+import { DatabaseService } from './database/database.service';
+import { DatabaseController } from './database/database.controller';
 
 @Module({
   imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule],
-  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController],
-  providers: [AppService, ProductService, CustomerService],
+  controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController],
+  providers: [AppService, ProductService, CustomerService, DatabaseService],
 })
 export class AppModule {}
