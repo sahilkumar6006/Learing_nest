@@ -25,6 +25,7 @@ import { LoggerMiddleware } from './middleware/logger/logger.middleware';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { OpenaiController } from './openai/openai.controller';
+import { StudentMongoModule } from './student-mongo/student-mongo.module';
 
 @Module({
   imports: [EmployeeModule, CategoryModule, CustomerModule, StudentModule, ConfigModule.forRoot({
@@ -40,7 +41,8 @@ import { OpenaiController } from './openai/openai.controller';
       ],
       errorMessage: 'Too many requests, please try again later.',
     }),
-    MongooseModule.forRoot(process.env.DATABASE_URL!)
+    MongooseModule.forRoot(process.env.DATABASE_URL!),
+    StudentMongoModule
   ],
   controllers: [AppController, UserController, ProductController, CustomerController, StudentController, MynameController, RolesauthController, ExceptionController, DatabaseController, EvController, OpenaiController],
   providers: [AppService, ProductService, CustomerService, DatabaseService, EvService,
